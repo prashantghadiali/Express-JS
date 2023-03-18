@@ -5,6 +5,8 @@ const app = express();
 
 // npm install express (to ins express)
 
+//npm install ejs 
+
 
 app.get('/', function(req, res){
     res.send('<h1>Cool, it is running! or is it?</h1>');
