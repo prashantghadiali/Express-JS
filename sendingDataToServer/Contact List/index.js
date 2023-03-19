@@ -6,6 +6,24 @@ const app = express();
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
+app.use(express.urlencoded());
+
+// middleware1
+app.use(function(req, res, next){
+   
+
+    req.myName = "Arpan"
+    // console.log('middleware 1 called');
+    next();
+});
+
+// middleware2
+app.use(function(req, res, next){
+    
+    console.log('My name called from MW2', req.myName);
+    // console.log('middleware 2 called');
+    next();
+});
 
 
 var contactList = [
@@ -31,13 +49,17 @@ app.get('/practice', function(req, res){
 
 
 app.get('/', function(req, res){
+    console.log('from the get route controller', req.myName);
     return res.render('home',{
         title: "Contact List",
         contact_list: contactList
     });
 })
 app.post('/create-contact', function(req, res){
-    return res.redirect('/practice');
+ 
+    contactList.push(req.body);
+    return res.redirect('/');
+
 });
 
 app.listen(port, function(err){
